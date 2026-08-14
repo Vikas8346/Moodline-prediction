@@ -2,15 +2,21 @@ services:
   - type: web
     name: moodline
     env: python
-    pythonVersion: 3.11
-    plan: free
+    pythonVersion: 3.11.9
+    plan: standard
     
-    buildCommand: pip install --upgrade pip setuptools wheel && pip install -r requirements.txt
+    buildCommand: |
+      pip install --upgrade pip setuptools wheel &&
+      pip install --no-cache-dir -r requirements.txt
+    
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PYTHONPYCACHEPREFIX
+        value: /tmp/pycache
     
     maxInstances: 1
     minInstances: 1
+    previewsEnabled: false
