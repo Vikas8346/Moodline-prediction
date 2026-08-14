@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: moodline
+    env: python
+    pythonVersion: 3.11
+    plan: free
+    
+    buildCommand: pip install --upgrade pip setuptools wheel && pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+    
+    maxInstances: 1
+    minInstances: 1
